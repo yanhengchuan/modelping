@@ -1,0 +1,7 @@
+# Keep the batch file exactly as-is: GBK bytes + CRLF line endings.
+# Git must NOT normalize line endings here, or the Chinese text / CRLF break.
+*.bat -text
+
+# Treat shell/powershell scripts as text with LF unless authored otherwise.
+*.ps1 text
+*.md  text

@@ -1,0 +1,25 @@
+{
+    "version": "1.0.0",
+    "description": "Verify OpenAI-compatible API keys (vendor + key + model) from the command line.",
+    "homepage": "https://github.com/yanhengchuan/modelping",
+    "license": "MIT",
+    "notes": [
+        "Usage:  ModelPing <vendor> <api-key> <model>",
+        "        ModelPing /?       for help",
+        "The Zhipu probe key is stored in ModelPing.zkey (script folder, or %LOCALAPPDATA%\\ModelPing)."
+    ],
+    "url": "https://raw.githubusercontent.com/yanhengchuan/modelping/v1.0.0/ModelPing.bat",
+    "hash": "a654c7a97408908d31a1f0213f4c316132c26a9ace2ff82d30ad48ba2203425e",
+    "bin": [
+        [
+            "ModelPing.bat",
+            "ModelPing"
+        ]
+    ],
+    "checkver": {
+        "github": "https://github.com/yanhengchuan/modelping"
+    },
+    "autoupdate": {
+        "url": "https://raw.githubusercontent.com/yanhengchuan/modelping/v$version/ModelPing.bat"
+    }
+}

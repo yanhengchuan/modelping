@@ -1,0 +1,11 @@
+# ---- ModelPing 运行期生成的本地密钥文件（含真实 API Key，切勿提交）----
+ModelPing.zkey
+
+# ---- 可写性探测用的临时文件（运行中创建后自动删除）----
+.mp_wtest
+
+# ---- 常见临时/系统文件 ----
+Thumbs.db
+Desktop.ini
+*.tmp
+*.log
