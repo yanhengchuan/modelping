@@ -93,10 +93,54 @@ ModelPing collapses all of this into a single command: **just the vendor name + 
 
 ## Installation
 
-1. Download `ModelPing.bat` into any directory (e.g. `D:\Scripts\`).
-2. Optional: add that directory to the system `Path` so you can call `ModelPing` from anywhere; if you prefer, just run it from its own folder.
+Pick any one. The first two install with a **single command pulled from the repo** — no manual download.
 
-> No dependencies to install. To make it a global command (run `ModelPing ...` from anywhere), add the script's folder to `PATH`.
+### Option 1: PowerShell one-liner (recommended, zero friction)
+
+Paste this into PowerShell and press Enter:
+
+```powershell
+irm https://raw.githubusercontent.com/yanhengchuan/modelping/main/install.ps1 | iex
+```
+
+> If `raw.githubusercontent.com` is blocked on your network, use the jsDelivr mirror instead (`install.ps1` itself also tries several mirrors automatically — no extra config):
+>
+> ```powershell
+> irm https://cdn.jsdelivr.net/gh/yanhengchuan/modelping@main/install.ps1 | iex
+> ```
+
+This downloads `ModelPing.bat` to `%LOCALAPPDATA%\ModelPing\` and adds it to your user `PATH`.
+**Open a new terminal** afterwards so the `PATH` change takes effect, then run `ModelPing ...`.
+
+Uninstall:
+
+```powershell
+irm https://raw.githubusercontent.com/yanhengchuan/modelping/main/uninstall.ps1 | iex
+```
+
+### Option 2: Scoop (an `apt` / `npm`-style experience)
+
+```powershell
+scoop bucket add modelping https://github.com/yanhengchuan/modelping
+scoop install modelping
+```
+
+Uninstall: `scoop uninstall modelping`
+
+### Option 3: Direct download (portable)
+
+1. Download `ModelPing.bat` from this repo into any folder (e.g. `D:\Scripts\`).
+2. Optional: add that folder to your system `PATH` to call `ModelPing` from anywhere; otherwise just run it from its own folder.
+
+### Option 4: git clone (developers)
+
+```powershell
+git clone https://github.com/yanhengchuan/modelping.git
+cd modelping
+.\ModelPing.bat /?
+```
+
+> None of the above require any extra dependency. Where the probe-key file lives: the script folder when writable; otherwise it automatically falls back to `%LOCALAPPDATA%\ModelPing\` (e.g. when a package manager installs into a read-only folder).
 
 ---
 
@@ -203,10 +247,17 @@ A: Yes. The script returns to the console when done — just type the next comma
 
 ```
 .
-├── ModelPing.bat      # main script (the only file you need to distribute)
-├── ModelPing.zkey     # sidecar Zhipu probe key (auto-generated on first run; never commit it)
-├── LICENSE
-└── README.md
+├── ModelPing.bat          # main script (GBK + CRLF; the only file to distribute/install)
+├── install.ps1            # one-line installer (download + PATH setup)
+├── uninstall.ps1          # uninstaller
+├── bucket/
+│   └── modelping.json     # Scoop manifest (for `scoop bucket add`)
+├── README.md              # Chinese docs
+├── README.en.md           # English docs
+├── LICENSE                # MIT
+├── .gitignore             # ignores the runtime ModelPing.zkey, etc.
+├── .gitattributes         # pins *.bat as binary (protects GBK/CRLF from Git)
+└── ModelPing.zkey         # runtime key file (generated locally, never committed)
 ```
 
 ---
