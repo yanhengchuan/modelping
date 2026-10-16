@@ -8,6 +8,8 @@
 
 > 一个用于快速验证 OpenAI 兼容 API Key 是否有效的 Windows 批处理脚本。
 
+[English](README.en.md) | **中文**
+
 在命令行里输入 `ModelPing 厂商 密钥 模型名`，脚本就会替你向对应平台发送一次小请求，根据返回的 HTTP 状态码告诉你这把 Key 到底能不能用。
 
 ```console
@@ -88,54 +90,10 @@ ModelPing 把这些都收敛成一个命令：**只输入厂商名 + Key + 模�
 
 ## 安装方式
 
-任选一种。前两种为**一条命令从仓库拉取安装**，无需手动下载。
+1. 下载 `ModelPing.bat` 到任意目录（例如 `D:\Scripts\`）。
+2. 可选：把该目录加入系统 `Path` 环境变量，即可在任意路径直接调用 `ModelPing`；不加也行，就在脚本所在目录运行。
 
-### 方式一：PowerShell 一行安装（推荐，零门槛）
-
-在 PowerShell 中粘贴以下命令并回车：
-
-```powershell
-irm https://raw.githubusercontent.com/yanhengchuan/modelping/main/install.ps1 | iex
-```
-
-> 若 `raw.githubusercontent.com` 被网络屏蔽，可改用 jsDelivr 镜像（`install.ps1` 内部也会自动尝试多个源，无需额外配置）：
->
-> ```powershell
-> irm https://cdn.jsdelivr.net/gh/yanhengchuan/modelping@main/install.ps1 | iex
-> ```
-
-脚本会把 `ModelPing.bat` 下载到 `%LOCALAPPDATA%\ModelPing\`，并自动加入用户 `PATH`。
-**安装后请新开一个终端**，使 `PATH` 生效，然后直接运行 `ModelPing ...`。
-
-卸载：
-
-```powershell
-irm https://raw.githubusercontent.com/yanhengchuan/modelping/main/uninstall.ps1 | iex
-```
-
-### 方式二：Scoop（类 `apt` / `npm` 体验）
-
-```powershell
-scoop bucket add modelping https://github.com/yanhengchuan/modelping
-scoop install modelping
-```
-
-卸载：`scoop uninstall modelping`
-
-### 方式三：直接下载（便携式）
-
-1. 从本仓库下载 `ModelPing.bat` 到任意目录（例如 `D:\Scripts\`）。
-2. 可选：把该目录加入系统 `PATH`，即可在任意路径直接调用 `ModelPing`；不加也行，就在脚本所在目录运行。
-
-### 方式四：git clone（开发者）
-
-```powershell
-git clone https://github.com/yanhengchuan/modelping.git
-cd modelping
-.\ModelPing.bat /?
-```
-
-> 以上方式均**无需安装任何额外依赖**。探测 Key 文件的存放位置：脚本所在目录可写时放在同目录；若不可写（例如包管理器安装到只读目录），自动回退到 `%LOCALAPPDATA%\ModelPing\`。
+> 无需安装任何依赖。若希望实现全局命令（随处敲 `ModelPing ...` 可用），把脚本所在文件夹加入 `PATH` 即可。
 
 ---
 
@@ -242,17 +200,10 @@ A：可以。脚本执行完直接返回控制台，连续敲命令即可，无�
 
 ```
 .
-├── ModelPing.bat          # 主脚本（GBK + CRLF，唯一需要分发/安装的文件）
-├── install.ps1            # 一行安装脚本（下载 + 配置 PATH）
-├── uninstall.ps1          # 卸载脚本
-├── bucket/
-│   └── modelping.json     # Scoop manifest（供 scoop bucket add 使用）
-├── README.md              # 中文说明
-├── README.en.md           # 英文说明
-├── LICENSE                # MIT
-├── .gitignore             # 忽略运行期生成的 ModelPing.zkey 等
-├── .gitattributes         # 固定 *.bat 为二进制（保护 GBK/CRLF 不被 Git 转换）
-└── ModelPing.zkey         # 运行时生成的本机密钥（不提交）
+├── ModelPing.bat      # 主脚本（唯一需要分发的文件）
+├── ModelPing.zkey     # 旁挂的智谱探测 Key（首次运行自动生成，切勿提交到 Git）
+├── LICENSE
+└── README.md
 ```
 
 ---
