@@ -103,6 +103,12 @@ Paste this into PowerShell and press Enter:
 irm https://raw.githubusercontent.com/yanhengchuan/modelping/main/install.ps1 | iex
 ```
 
+> If `raw.githubusercontent.com` is blocked on your network, use the jsDelivr mirror instead (`install.ps1` itself also tries several mirrors automatically — no extra config):
+>
+> ```powershell
+> irm https://cdn.jsdelivr.net/gh/yanhengchuan/modelping@main/install.ps1 | iex
+> ```
+
 This downloads `ModelPing.bat` to `%LOCALAPPDATA%\ModelPing\` and adds it to your user `PATH`.
 **Open a new terminal** afterwards so the `PATH` change takes effect, then run `ModelPing ...`.
 

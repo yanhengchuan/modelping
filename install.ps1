@@ -10,6 +10,9 @@
     One-line usage (PowerShell):
         irm https://raw.githubusercontent.com/yanhengchuan/modelping/main/install.ps1 | iex
 
+    If raw.githubusercontent.com is blocked on your network, several mirrors are
+    tried automatically (github.com/raw and the jsDelivr CDN).
+
 .NOTES
     The downloaded file is a GBK-encoded .bat with CRLF line endings; it is
     transferred byte-for-byte (no transcoding) so the Chinese output stays intact.
@@ -24,29 +27,42 @@ param(
 $ErrorActionPreference = 'Stop'
 $Repo = 'yanhengchuan/modelping'
 $File = 'ModelPing.bat'
-$Url  = "https://raw.githubusercontent.com/$Repo/$Branch/$File"
 
-Write-Host "[ModelPing] installing from $Url" -ForegroundColor Cyan
+# Candidate sources, tried in order. raw first, then github.com/raw, then jsDelivr.
+$Sources = @(
+    "https://raw.githubusercontent.com/$Repo/$Branch/$File",
+    "https://github.com/$Repo/raw/$Branch/$File",
+    "https://cdn.jsdelivr.net/gh/$Repo@$Branch/$File"
+)
 
-# --- 1. download (byte-for-byte) ---
+Write-Host "[ModelPing] installing '$Repo' ($Branch) ..." -ForegroundColor Cyan
+
+# --- 1. download (byte-for-byte) with source fallback ---
 if (-not (Test-Path -LiteralPath $InstallDir)) {
     New-Item -ItemType Directory -Path $InstallDir -Force | Out-Null
 }
 $Target = Join-Path $InstallDir $File
+$Ok = $false
 
-# Use a WebClient so the raw bytes are preserved without any text decoding.
-try {
-    $wc = New-Object System.Net.WebClient
-    $wc.Headers.Add('User-Agent', 'ModelPing-Installer')
-    $wc.DownloadFile($Url, $Target)
-    $wc.Dispose()
-} catch {
-    Write-Error "Download failed: $($_.Exception.Message)"
-    exit 1
+foreach ($url in $Sources) {
+    try {
+        Write-Host "  -> trying $url" -ForegroundColor DarkGray
+        $wc = New-Object System.Net.WebClient
+        $wc.Headers.Add('User-Agent', 'ModelPing-Installer')
+        $wc.DownloadFile($url, $Target)
+        $wc.Dispose()
+        if ((Test-Path -LiteralPath $Target) -and (Get-Item -LiteralPath $Target).Length -gt 1024) {
+            $Ok = $true
+            Write-Host "  OK ($((Get-Item -LiteralPath $Target).Length) bytes)" -ForegroundColor Green
+            break
+        }
+    } catch {
+        Write-Host "  failed: $($_.Exception.Message)" -ForegroundColor DarkYellow
+    }
 }
 
-if (-not (Test-Path -LiteralPath $Target) -or (Get-Item -LiteralPath $Target).Length -le 0) {
-    Write-Error 'Downloaded file is missing or empty.'
+if (-not $Ok) {
+    Write-Error 'Download failed from all sources. Check your network / proxy, then retry.'
     exit 1
 }
 Write-Host "[ModelPing] saved to $Target" -ForegroundColor Green

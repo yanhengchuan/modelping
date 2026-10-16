@@ -8,7 +8,10 @@
         "        ModelPing /?       for help",
         "The Zhipu probe key is stored in ModelPing.zkey (script folder, or %LOCALAPPDATA%\\ModelPing)."
     ],
-    "url": "https://raw.githubusercontent.com/yanhengchuan/modelping/v1.0.0/ModelPing.bat",
+    "url": [
+        "https://raw.githubusercontent.com/yanhengchuan/modelping/v1.0.0/ModelPing.bat",
+        "https://cdn.jsdelivr.net/gh/yanhengchuan/modelping@v1.0.0/ModelPing.bat"
+    ],
     "hash": "a654c7a97408908d31a1f0213f4c316132c26a9ace2ff82d30ad48ba2203425e",
     "bin": [
         [
@@ -20,6 +23,9 @@
         "github": "https://github.com/yanhengchuan/modelping"
     },
     "autoupdate": {
-        "url": "https://raw.githubusercontent.com/yanhengchuan/modelping/v$version/ModelPing.bat"
+        "url": [
+            "https://raw.githubusercontent.com/yanhengchuan/modelping/v$version/ModelPing.bat",
+            "https://cdn.jsdelivr.net/gh/yanhengchuan/modelping@v$version/ModelPing.bat"
+        ]
     }
 }

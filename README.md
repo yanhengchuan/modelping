@@ -98,6 +98,12 @@ ModelPing 把这些都收敛成一个命令：**只输入厂商名 + Key + 模�
 irm https://raw.githubusercontent.com/yanhengchuan/modelping/main/install.ps1 | iex
 ```
 
+> 若 `raw.githubusercontent.com` 被网络屏蔽，可改用 jsDelivr 镜像（`install.ps1` 内部也会自动尝试多个源，无需额外配置）：
+>
+> ```powershell
+> irm https://cdn.jsdelivr.net/gh/yanhengchuan/modelping@main/install.ps1 | iex
+> ```
+
 脚本会把 `ModelPing.bat` 下载到 `%LOCALAPPDATA%\ModelPing\`，并自动加入用户 `PATH`。
 **安装后请新开一个终端**，使 `PATH` 生效，然后直接运行 `ModelPing ...`。
 
