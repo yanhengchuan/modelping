@@ -28,11 +28,13 @@ $ErrorActionPreference = 'Stop'
 $Repo = 'yanhengchuan/modelping'
 $File = 'ModelPing.bat'
 
-# Candidate sources, tried in order. raw first, then github.com/raw, then jsDelivr.
+# Candidate sources, tried in order. jsDelivr is the reliable mirror when
+# raw.githubusercontent.com is blocked (note: github.com/<repo>/raw/... simply
+# 302-redirects to raw.githubusercontent.com, so it is only a last resort).
 $Sources = @(
     "https://raw.githubusercontent.com/$Repo/$Branch/$File",
-    "https://github.com/$Repo/raw/$Branch/$File",
-    "https://cdn.jsdelivr.net/gh/$Repo@$Branch/$File"
+    "https://cdn.jsdelivr.net/gh/$Repo@$Branch/$File",
+    "https://github.com/$Repo/raw/$Branch/$File"
 )
 
 Write-Host "[ModelPing] installing '$Repo' ($Branch) ..." -ForegroundColor Cyan
